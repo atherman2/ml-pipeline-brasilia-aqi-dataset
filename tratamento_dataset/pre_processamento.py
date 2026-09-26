@@ -105,7 +105,7 @@ def normalizar_dados(d0, d1, d2):
 def separacao_variavel_alvo(d0, d1, d2):
     coluna_alvo = COL_AVISO_AQI
     periodos = []
-    for d in d0:
+    for d in [d0, d1, d2]:
         periodos.append((
             d[VARIAVEIS_EXPLICATIVAS].values,
             d[coluna_alvo].values
