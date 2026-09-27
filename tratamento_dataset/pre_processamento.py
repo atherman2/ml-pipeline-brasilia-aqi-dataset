@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+from analise.drift import analisar_drift_ks
 
 COL_DATA = "Date"
 COL_AQI_FUTURO = "Future_24h_AQI"
@@ -24,7 +25,8 @@ def pre_processamento_dataset(df):
     df = limiarizar_coluna_aqi(df)
     d0, d1, d2 = split_temporal(df)
     d0, d1, d2 = normalizar_dados(d0, d1, d2)
-    return separacao_variavel_alvo(d0, d1, d2)
+    df = analisar_drift_ks(d0, d1, d2, COLUNAS_NUMERICAS)
+    return separacao_variavel_alvo(d0, d1, d2), df
 
 def downsampling(df, salto=1):
     """

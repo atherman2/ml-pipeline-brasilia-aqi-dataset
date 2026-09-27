@@ -22,7 +22,10 @@ df_dataset_preparado = prepara_dataset()
 
 # %%
 from tratamento_dataset.pre_processamento import pre_processamento_dataset
-periodos = pre_processamento_dataset(df_dataset_preparado)
+periodos, df_drift = pre_processamento_dataset(df_dataset_preparado)
+
+# %%
+display(df_drift)
 
 # %%
 from sklearn.linear_model import LogisticRegression
@@ -115,5 +118,16 @@ for modelo, metricas in resultados.items():
 print("Resultados do Experimento:")
 print(json.dumps(resultados, indent=4, ensure_ascii=False))
 
+
+# %%
+from analise.explicabilidade import explicabilidade_permutacao
+
+COLUNAS_NUMERICAS = ["CO", "NO2", "SO2", "O3", "PM2.5", "PM10", "AQI"]
+
+df_exp_m0 = explicabilidade_permutacao(m0, periodos[2][0], periodos[2][1], COLUNAS_NUMERICAS)
+df_exp_mft = explicabilidade_permutacao(mft, periodos[2][0], periodos[2][1], COLUNAS_NUMERICAS)
+
+display(df_exp_m0)
+display(df_exp_mft)
 
 # %%
