@@ -1,11 +1,11 @@
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import TimeSeriesSplit, GridSearchCV
 
-def criar_modelo_hiperparametros_otimizados(X0, y0):
+def criar_modelo_hiperparametros_otimizados(X0, y0, seed=42):
     # O uso do TimeSeriesSplit previne o data leakage temporal durante a validação cruzada
     tscv = TimeSeriesSplit(n_splits=3)
     # O modelo principal (MLP) é instanciado sem pesos pré-treinados
-    mlp_base = MLPClassifier(max_iter=1000, random_state=42)
+    mlp_base = MLPClassifier(max_iter=1000, random_state=seed)
     # Grid restrito a poucos parâmetros para otimizar o tempo de execução
     grid_parametros = {
         'hidden_layer_sizes': [(50,), (100,)],
